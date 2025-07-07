@@ -22,6 +22,16 @@ app.post("/api/movies", async(req, res) => {
     }
 });
 
+app.delete("/api/movies/:id", async (req, res) => {
+    const {id} = req.params;
+    try{
+        await Movie.findByIdAndDelete(id);
+        res.status(200).json({success: true, message: "Movie deleted successfully"});
+    }catch(error){
+        res.status(500).json({success: false, message: "Movie not found"});
+    }
+});
+
 app.listen(5000, () => {
     connectDB();
     console.log("Server is running on port 5000");
